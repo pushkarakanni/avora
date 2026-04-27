@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Avora | Crazy Heads - Split Landing</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- Using Cinzel for the elegant serif titles and Montserrat for the clean, spaced-out sans-serif text -->
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --transition-speed: 0.8s;
+            --transition-easing: cubic-bezier(0.25, 1, 0.5, 1);
+            --gold-light: #fbe6a2;
+            --gold-main: #d4af37;
+            --gold-dark: #8c7322;
+            --purple-light: #e879f9;
+            --purple-main: #a855f7;
+            --purple-dark: #7e22ce;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body, html {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background-color: #000;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        /* Container for the split screen */
+        .split-container {
+            display: flex;
+            width: 100vw;
+            height: 100vh;
+        }
+
+        /* Base panel styling */
+        .panel {
+            position: relative;
+            height: 100%;
+            width: 50%; /* Default 50/50 state */
+            transition: width var(--transition-speed) var(--transition-easing);
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            cursor: pointer;
+        }
+
+        /* Hover logic: when container is hovered, panels default to 30%, but the specifically hovered panel takes 70% */
+        .split-container:hover .panel {
+            width: 30%;
+        }
+        .split-container .panel:hover {
+            width: 70%;
+        }
+
+        /* Background image wrapper */
+        .bg-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            transition: transform var(--transition-speed) ease;
+            z-index: 1;
+        }
+
+        /* Slight zoom on the background when hovering the panel */
+        .panel:hover .bg-image {
+            transform: scale(1.05);
+        }
+
+        /* Dark overlay to make text pop, styled specifically for left and right */
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 2;
+        }
+
+        /* Specific Left Panel Styles (Avora) */
+        .left-panel .bg-image {
+            /* Deep dark luxury chandelier event */
+            background-image: url('https://images.unsplash.com/photo-1566737236500-c8ac43014a67?q=80&w=2070&auto=format&fit=crop'); 
+        }
+        .left-panel .overlay {
+            /* Reduced alpha tint slightly */
+            background: linear-gradient(180deg, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.90) 100%);
+        }
+
+        /* Specific Right Panel Styles (Crazy Heads) */
+        .right-panel .bg-image {
+            /* Purple/blue laser concert crowd */
+            background-image: url('https://images.unsplash.com/photo-1514525253161-7a46d19cd819?q=80&w=2067&auto=format&fit=crop');
+        }
+        .right-panel .overlay {
+            /* Reduced alpha tint slightly */
+            background: linear-gradient(180deg, rgba(15,0,25,0.65) 0%, rgba(5,0,10,0.90) 100%);
+        }
+
+        /* Content Container */
+        .content {
+            position: relative;
+            z-index: 3;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            width: 100%; /* Ensures it stays centered dynamically within the changing panel width */
+        }
+
+        /* Top Small Subtitles */
+        .subtitle {
+            font-size: 0.75rem;
+            letter-spacing: 0.4em;
+            text-transform: uppercase;
+            margin-bottom: 1.5rem;
+            font-weight: 400;
+        }
+        .left-panel .subtitle {
+            color: var(--gold-main);
+        }
+        .right-panel .subtitle {
+            color: var(--purple-main);
+            opacity: 0.8;
+        }
+
+        /* Main Big Titles */
+        .title {
+            font-family: 'Cinzel', serif;
+            font-size: clamp(3rem, 6vw, 6.5rem); /* Responsive font size */
+            line-height: 1;
+            margin: 0 0 1rem 0;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+        }
+        
+        .left-panel .title {
+            background: linear-gradient(to right, #cf9c45, #f5d78d, #b38228);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0px 4px 30px rgba(212, 175, 55, 0.2);
+        }
+
+        .right-panel .title {
+            background: linear-gradient(to right, #c026d3, #a855f7, #6366f1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0px 4px 30px rgba(168, 85, 247, 0.3);
+        }
+
+        /* Bottom Small Subtitles */
+        .subtitle-2 {
+            font-family: 'Cinzel', serif;
+            font-size: clamp(1rem, 2vw, 1.8rem);
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            font-weight: 400;
+            color: #ffffff;
+            opacity: 0.9;
+        }
+
+        /* Enter Button appearing on hover */
+        .enter-btn {
+            margin-top: 2rem;
+            font-size: 0.8rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease;
+        }
+        
+        .left-panel .enter-btn {
+            color: var(--gold-main);
+        }
+        
+        .right-panel .enter-btn {
+            color: #d8b4fe;
+        }
+
+        .panel:hover .enter-btn {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Arrow animation */
+        .arrow {
+            transition: transform 0.3s ease;
+        }
+        .enter-btn:hover .arrow {
+            transform: translateX(5px);
+        }
+        
+        /* Subtle divider between the two halves */
+        .right-panel {
+            border-left: 1px solid rgba(255,255,255,0.05);
+        }
+
+        /* Responsive adjustments for mobile */
+        @media (max-width: 768px) {
+            .split-container {
+                flex-direction: column;
+            }
+            .panel {
+                width: 100% !important; /* Disables flex horizontal hover on mobile */
+                height: 50%;
+                transition: height var(--transition-speed) var(--transition-easing);
+            }
+            .split-container:hover .panel {
+                height: 30%;
+            }
+            .split-container .panel:hover {
+                height: 70%;
+            }
+            .enter-btn {
+                margin-top: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="split-container">
+        <!-- Left Panel: Luxury Events -->
+        <div class="panel left-panel">
+            <div class="bg-image"></div>
+            <div class="overlay"></div>
+            <div class="content">
+                <p class="subtitle">Luxury Events</p>
+                <h1 class="title">AVORA</h1>
+                <p class="subtitle-2">EXPERIENCES</p>
+                
+                <a href="avora.html" class="enter-btn">
+                    ENTER <span class="arrow">→</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- Right Panel: Youth Events -->
+        <div class="panel right-panel">
+            <div class="bg-image"></div>
+            <div class="overlay"></div>
+            <div class="content">
+                <p class="subtitle">Youth Events</p>
+                <h1 class="title">CRAZY</h1>
+                <p class="subtitle-2">HEADS</p>
+
+                <a href="crazyheads.html" class="enter-btn">
+                    ENTER <span class="arrow">→</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
